@@ -61,7 +61,7 @@ $users = Get-ADUser -Filter * -SearchBase $domain -Properties DistinguishedName
 $uppercase = "ABCDEFGHKLMNOPRSTUVWXYZ".tochararray() 
 $lowercase = "abcdefghiklmnoprstuvwxyz".tochararray() 
 $number = "0123456789".tochararray() 
-$special = "$%&/()=?}{@#*+!".tochararray()
+$special = "%()=?}{@#+!".tochararray()
 
 #Where the user passwords are going
 #By default it will be created in the same directory with the name UsersNewPasswords.csv
