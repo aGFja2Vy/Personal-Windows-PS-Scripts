@@ -110,5 +110,4 @@ foreach($user in $users)
     
     Set-ADAccountPassword -Identity $name -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $password -Force)
     $idValue += 1
-    Pause
 }
