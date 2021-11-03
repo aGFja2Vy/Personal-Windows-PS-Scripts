@@ -108,7 +108,7 @@ foreach($user in $users)
     Write-Output $password
     Add-content $csvPasswordFile ([string]$idValue + ",`"" + $name + "`"," + $password)
     
-    Set-ADAccountPassword -Identity $name -Reset -NewPassword (ConvertTo-SecureString -AsPlainText "P@ssw0rd1" -Force)
+    Set-ADAccountPassword -Identity $name -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $password -Force)
     $idValue += 1
     Pause
 }
