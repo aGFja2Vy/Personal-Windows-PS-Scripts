@@ -65,13 +65,13 @@ $special = "%()=?}{@#+!".tochararray()
 
 #Where the user passwords are going
 #By default it will be created in the same directory with the name UsersNewPasswords.csv
-$csvPasswordFile = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+#$csvPasswordFile = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 Write-Output "-----------------------------------------------------------------------------------------"
 Write-Output "This is where the csv, and password files are stored"
 Write-Output "Format: C:\...\..."
 Write-Output "DO NOT add the filename at the end of the directory"
-Write-Output ("Default location: " + $csvPasswordFile)
+#Write-Output ("Default location: " + $csvPasswordFile)
 $inputPath = Read-host "Input"
 
 if(!$inputPath.Equals(""))
@@ -87,15 +87,20 @@ $idValue = 0
 #Loop through each profile hive and set a new password
 foreach($user in $users)
 {
-    #Start by genreating the new count for each type of chaicter
+    #Linux team wants 14 char passwords, so I temperally removed the randomness for the number of each char to add
+
+    #Start by genreating the new count for each type of char
     #This is done to gearentee there is never a weak password
-    $count = Get-Random -Minimum 2 -Maximum 10
+
+    $count = 4
+    #$count = Get-Random -Minimum 4 -Maximum 10
     $password =($uppercase | Get-Random -count $count) -join ''
-    $count = Get-Random -Minimum 5 -Maximum 10
+    #$count = Get-Random -Minimum 5 -Maximum 10
     $password +=($lowercase | Get-Random -count $count) -join ''
-    $count = Get-Random -Minimum 2 -Maximum 10
+    #$count = Get-Random -Minimum 3 -Maximum 10
     $password +=($number | Get-Random -count $count) -join ''
-    $count = Get-Random -Minimum 2 -Maximum 10
+    $count = 2
+    #$count = Get-Random -Minimum 2 -Maximum 4
     $password +=($special | Get-Random -count $count) -join ''
 
     #Scramble the password so the chars are not bunched up by type
