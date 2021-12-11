@@ -82,8 +82,10 @@ if(!$inputPath.Equals(""))
 $csvPasswordFile += "\UsersNewPasswords.csv"
 New-Item $csvPasswordFile -ItemType File
 
-#The ID is the number for the password, making it easier to communicate passwords between people
-$idValue = 0
+#hostname for the csv file
+Write-Output "-----------------------------------------------------------------------------------------"
+$hostname = Read-Host "Enter Hostname:"
+
 #Loop through each profile hive and set a new password
 foreach($user in $users)
 {
@@ -111,8 +113,7 @@ foreach($user in $users)
     $name = $user | Select-Object -expand DistinguishedName
     Write-Output $name
     Write-Output $password
-    Add-content $csvPasswordFile ([string]$idValue + ",`"" + $name + "`"," + $password)
+    Add-content $csvPasswordFile ($hostname + "," + $name + "," + $password)
     
     Set-ADAccountPassword -Identity $name -Reset -NewPassword (ConvertTo-SecureString -AsPlainText $password -Force)
-    $idValue += 1
 }
