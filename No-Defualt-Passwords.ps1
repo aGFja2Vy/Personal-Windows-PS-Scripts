@@ -15,6 +15,28 @@ This script does the following in order
     4b) Adds the name, and new password to the csv file
     4c) Changes the password for the selected user
 #>
+param(
+    [Parameter(Position=0, mandatory=$true, HelpMessage="The domain in the format: DC=CyberUCI,DC=com")]
+    [string]$domain,
+    
+    [Parameter(Position=1, mandatory=$true, HelpMessage="The download path for the csv in the format: C:\...\..")]
+    [string]$path,
+
+    [Parameter(Position=2, mandatory=$true, HelpMessage="Password for gmoment")]
+    [string]$SuperPass,
+
+    [Parameter(Position=3, mandatory=$true, HelpMessage="UCount is the number of Uppercase Chars in the password (recommend 4)")]
+    [int]$UCount,
+
+    [Parameter(Position=4, mandatory=$true, HelpMessage="LCount is the number of the Lowercase Chars in the password (recommend 4)")]
+    [int]$LCount,
+
+    [Parameter(Position=5, mandatory=$true, HelpMessage="NCount is the numebr of Number Chars in the passwords (recommend 3)")]
+    [int]$NCount,
+
+    [Parameter(Position=6, mandatory=$true, HelpMessage="SCount is the number of Special Chars in the passwords (recommend 3)")]
+    [int]$SCount
+    )
 
 Import-Module ActiveDirectory
 Install-WindowsFeature -Name RSAT-AD-PowerShell
@@ -42,29 +64,6 @@ else
    exit
    }
 
-#get parameters for the script
-param(
-    [Parameter(Position=0, mandatory=$true, HelpMessage="The domain in the format: DC=CyberUCI,DC=com")]
-    [string]$domain,
-    
-    [Parameter(Position=1, mandatory=$true, HelpMessage="The download path for the csv in the format: C:\...\..")]
-    [string]$path,
-
-    [Parameter(Position=2, mandatory=$true, HelpMessage="Password for gmoment")]
-    [string]$SuperPass,
-
-    [Parameter(Position=3, mandatory=$true, HelpMessage="UCount is the number of Uppercase Chars in the password (recommend 4)")]
-    [int]$UCount,
-
-    [Parameter(Position=4, mandatory=$true, HelpMessage="LCount is the number of the Lowercase Chars in the password (recommend 4)")]
-    [int]$LCount,
-
-    [Parameter(Position=5, mandatory=$true, HelpMessage="NCount is the numebr of Number Chars in the passwords (recommend 3)")]
-    [int]$NCount,
-
-    [Parameter(Position=6, mandatory=$true, HelpMessage="SCount is the number of Special Chars in the passwords (recommend 3)")]
-    [int]$SCount
-    )
 
 #Find all the user profiles in the domain
 #May want to add OU=Users before the domain.
